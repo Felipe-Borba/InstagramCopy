@@ -59,6 +59,7 @@
             <Button
                 android:id="@+id/login_btm_enter"
                 style="@style/Theme.Instagram.Button"
+                android:enabled="false"
                 android:text="@string/enter" />
 
             <FrameLayout
