@@ -3,6 +3,8 @@ package co.tiagoaguiar.course.instagram.profile.view
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -25,6 +27,16 @@ class ProfileFragment : Fragment() {
         val rv = view.findViewById<RecyclerView>(R.id.profile_rv)
         rv.layoutManager = GridLayoutManager(requireContext(), 3)
         rv.adapter = PostAdapter()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_profile, menu)
     }
 
     private class PostAdapter() : Adapter<PostAdapter.PostViewHolder>() {
