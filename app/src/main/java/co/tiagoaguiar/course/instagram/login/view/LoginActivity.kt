@@ -1,36 +1,35 @@
 package co.tiagoaguiar.course.instagram.login.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
-import android.widget.Button
-import co.tiagoaguiar.course.instagram.R
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
+import androidx.appcompat.app.AppCompatActivity
+import co.tiagoaguiar.course.instagram.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityLoginBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val editTextEmail = findViewById<TextInputEditText>(R.id.login_edit_email)
-        val editTextPassword = findViewById<TextInputEditText>(R.id.login_edit_password)
+        with(binding) {
+            loginEditEmail.addTextChangedListener(watcher)
+            loginEditPassword.addTextChangedListener(watcher)
 
-        editTextEmail.addTextChangedListener(watcher)
-        editTextPassword.addTextChangedListener(watcher)
+            loginBtmEnter.setOnClickListener {
+                loginBtmEnter.showProgress(true)
+                loginEditEmailInput.error = "teste"
+                loginEditPasswordInput.error = "teste"
 
-        val buttonEnter = findViewById<LoadingButton>(R.id.login_btm_enter)
-        buttonEnter.setOnClickListener {
-            buttonEnter.showProgress(true)
-            findViewById<TextInputLayout>(R.id.login_edit_email_input).error = "teste"
-            findViewById<TextInputLayout>(R.id.login_edit_password_input).error = "teste"
-
-            Handler(Looper.getMainLooper()).postDelayed({
-                buttonEnter.showProgress(false)
-            }, 2000)
+                Handler(Looper.getMainLooper()).postDelayed({
+                    loginBtmEnter.showProgress(false)
+                }, 2000)
+            }
         }
     }
 
@@ -39,7 +38,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            findViewById<LoadingButton>(R.id.login_btm_enter).isEnabled = s.toString().isNotEmpty()
+            binding.loginBtmEnter.isEnabled = s.toString().isNotEmpty()
         }
 
         override fun afterTextChanged(s: Editable?) {
