@@ -4,11 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import co.tiagoaguiar.course.instagram.common.base.DependencyInjector
 import co.tiagoaguiar.course.instagram.common.util.TxtWatcher
 import co.tiagoaguiar.course.instagram.databinding.ActivityLoginBinding
 import co.tiagoaguiar.course.instagram.login.Login
-import co.tiagoaguiar.course.instagram.login.data.FakeDataSource
-import co.tiagoaguiar.course.instagram.login.data.LoginRepository
 import co.tiagoaguiar.course.instagram.login.presentation.LoginPresenter
 import co.tiagoaguiar.course.instagram.main.view.MainActivity
 
@@ -20,7 +19,7 @@ class LoginActivity : AppCompatActivity(), Login.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
-        presenter = LoginPresenter(this, LoginRepository(FakeDataSource()))
+        presenter = LoginPresenter(this, DependencyInjector.loginRepository())
         setContentView(binding.root)
 
         with(binding) {
