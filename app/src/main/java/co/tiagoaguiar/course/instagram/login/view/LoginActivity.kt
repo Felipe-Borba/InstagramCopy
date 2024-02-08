@@ -3,12 +3,12 @@ package co.tiagoaguiar.course.instagram.login.view
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.text.Editable
-import android.text.TextWatcher
 import androidx.appcompat.app.AppCompatActivity
+import co.tiagoaguiar.course.instagram.common.util.TxtWatcher
 import co.tiagoaguiar.course.instagram.databinding.ActivityLoginBinding
+import co.tiagoaguiar.course.instagram.login.Login
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity(), Login.View {
 
     private lateinit var binding: ActivityLoginBinding
 
@@ -22,9 +22,6 @@ class LoginActivity : AppCompatActivity() {
             loginEditPassword.addTextChangedListener(watcher)
 
             loginBtmEnter.setOnClickListener {
-                loginBtmEnter.showProgress(true)
-                loginEditEmailInput.error = "teste"
-                loginEditPasswordInput.error = "teste"
 
                 Handler(Looper.getMainLooper()).postDelayed({
                     loginBtmEnter.showProgress(false)
@@ -33,15 +30,27 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private val watcher = object : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-        }
+    private val watcher = TxtWatcher {
+        binding.loginBtmEnter.isEnabled = it.isNotEmpty()
+    }
 
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            binding.loginBtmEnter.isEnabled = s.toString().isNotEmpty()
-        }
+    override fun showProgress(enabled: Boolean) {
+        binding.loginBtmEnter.showProgress(enabled)
+    }
 
-        override fun afterTextChanged(s: Editable?) {
-        }
+    override fun displayEmailFailure(emailError: Int?) {
+        binding.loginEditEmailInput.error = emailError?.let { getString(it) }
+    }
+
+    override fun displayPasswordFailure(passwordError: Int?) {
+        binding.loginEditPasswordInput.error = passwordError?.let { getString(it) }
+    }
+
+    override fun onUserAuthenticated() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onUserUnauthorized() {
+        TODO("Not yet implemented")
     }
 }
