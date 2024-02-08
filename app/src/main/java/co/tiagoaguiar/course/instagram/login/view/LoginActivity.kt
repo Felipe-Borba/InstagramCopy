@@ -1,13 +1,16 @@
 package co.tiagoaguiar.course.instagram.login.view
 
+import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import co.tiagoaguiar.course.instagram.common.util.TxtWatcher
 import co.tiagoaguiar.course.instagram.databinding.ActivityLoginBinding
 import co.tiagoaguiar.course.instagram.login.Login
+import co.tiagoaguiar.course.instagram.login.data.FakeDataSource
+import co.tiagoaguiar.course.instagram.login.data.LoginRepository
 import co.tiagoaguiar.course.instagram.login.presentation.LoginPresenter
+import co.tiagoaguiar.course.instagram.main.view.MainActivity
 
 class LoginActivity : AppCompatActivity(), Login.View {
 
@@ -17,7 +20,7 @@ class LoginActivity : AppCompatActivity(), Login.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
-        presenter = LoginPresenter(this)
+        presenter = LoginPresenter(this, LoginRepository(FakeDataSource()))
         setContentView(binding.root)
 
         with(binding) {
@@ -25,7 +28,6 @@ class LoginActivity : AppCompatActivity(), Login.View {
             loginEditEmail.addTextChangedListener(TxtWatcher {
                 displayEmailFailure(null)
             })
-
 
             loginEditPassword.addTextChangedListener(watcher)
             loginEditPassword.addTextChangedListener(TxtWatcher {
@@ -56,10 +58,12 @@ class LoginActivity : AppCompatActivity(), Login.View {
     }
 
     override fun onUserAuthenticated() {
-        TODO("Not yet implemented")
+        val intent = Intent(this, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent)
     }
 
-    override fun onUserUnauthorized() {
-        TODO("Not yet implemented")
+    override fun onUserUnauthorized(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 }
