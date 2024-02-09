@@ -14,6 +14,5 @@ interface RegisterEmail {
 
     interface Presenter : BasePresenter {
         fun create(email: String)
-
     }
 }

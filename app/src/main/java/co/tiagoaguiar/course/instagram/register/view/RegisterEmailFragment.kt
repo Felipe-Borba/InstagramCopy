@@ -1,5 +1,6 @@
 package co.tiagoaguiar.course.instagram.register.view
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.core.widget.addTextChangedListener
@@ -14,6 +15,7 @@ import co.tiagoaguiar.course.instagram.register.presenter.RegisterEmailPresenter
 class RegisterEmailFragment : Fragment(R.layout.fragment_register_email), RegisterEmail.View {
 
     private var binding: FragmentRegisterEmailBinding? = null
+    private var fragmentAttachListener: FragmentAttachListener? = null
 
     override lateinit var presenter: RegisterEmail.Presenter
 
@@ -53,13 +55,21 @@ class RegisterEmailFragment : Fragment(R.layout.fragment_register_email), Regist
         binding?.registerEditEmailInput?.error = message
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is FragmentAttachListener) {
+            fragmentAttachListener = context
+        }
+    }
+
     override fun goToNameAndPasswordScreen(email: String) {
-        TODO("Not yet implemented")
+        fragmentAttachListener?.goToNameAndPasswordScreen(email)
     }
 
     override fun onDestroy() {
         binding = null
         presenter.onDestroy()
+        fragmentAttachListener = null
         super.onDestroy()
     }
 }
