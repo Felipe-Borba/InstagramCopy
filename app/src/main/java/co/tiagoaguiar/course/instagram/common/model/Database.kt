@@ -8,7 +8,17 @@ object Database {
     var sessionAuth: UserAuth? = null
 
     init {
-        usersAuth.add(UserAuth(UUID.randomUUID().toString(), "userA@email.com", "12345678"))
-        usersAuth.add(UserAuth(UUID.randomUUID().toString(), "userB@email.com", "87654321"))
+        usersAuth.add(UserAuth(
+            uuid = UUID.randomUUID().toString(),
+            email = "userA@email.com",
+            password = "12345678",
+            name = "userA"
+        ))
+        usersAuth.add(UserAuth(
+            uuid = UUID.randomUUID().toString(),
+            email = "userB@email.com",
+            password = "87654321",
+            name = "userB"
+        ))
     }
 }

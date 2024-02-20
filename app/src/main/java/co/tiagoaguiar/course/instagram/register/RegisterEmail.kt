@@ -10,6 +10,7 @@ interface RegisterEmail {
         fun showProgress(enabled: Boolean)
         fun onEmailFailure(message: String)
         fun goToNameAndPasswordScreen(email: String)
+
     }
 
     interface Presenter : BasePresenter {

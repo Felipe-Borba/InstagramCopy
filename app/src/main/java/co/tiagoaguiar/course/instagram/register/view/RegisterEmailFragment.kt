@@ -27,7 +27,7 @@ class RegisterEmailFragment : Fragment(R.layout.fragment_register_email), Regist
 
         binding?.let {
             with(it) {
-                loginTxtRegister.setOnClickListener {
+                registerTxtLogin.setOnClickListener {
                     activity?.finish()
                 }
 
