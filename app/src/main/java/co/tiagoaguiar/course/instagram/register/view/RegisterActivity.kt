@@ -12,6 +12,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import co.tiagoaguiar.course.instagram.R
+import co.tiagoaguiar.course.instagram.common.extension.hideKeyboard
 import co.tiagoaguiar.course.instagram.common.view.CropperImageFragment
 import co.tiagoaguiar.course.instagram.common.view.CropperImageFragment.Companion.KEY_URI
 import co.tiagoaguiar.course.instagram.databinding.ActivityRegisterBinding
@@ -129,5 +130,6 @@ class RegisterActivity : AppCompatActivity(), FragmentAttachListener {
             addToBackStack(null)
             commit()
         }
+        hideKeyboard()
     }
 }
