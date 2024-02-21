@@ -64,7 +64,9 @@ class RegisterPhotoFragment : Fragment(R.layout.fragment_register_photo) {
         customDialog.setTitle(R.string.define_photo_profile)
         customDialog.addButton(R.string.photo, R.string.gallery) {
             when (it.id) {
-                R.string.photo -> {}
+                R.string.photo -> {
+                    fragmentAttachListener?.goToCameraScreen()
+                }
                 R.string.gallery -> {
                     fragmentAttachListener?.goToGalleryScreen()
                 }
