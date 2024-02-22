@@ -21,5 +21,6 @@ object Database {
             password = "87654321",
             name = "userB"
         ))
+        sessionAuth = usersAuth.first()
     }
 }

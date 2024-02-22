@@ -20,7 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Instagram">
         <activity
-            android:name=".login.view.LoginActivity"
+            android:name=".splash.view.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,7 +28,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".login.view.LoginActivity"
+            android:exported="false" />
+
         <activity android:name=".register.view.RegisterActivity" />
+
         <activity android:name=".main.view.MainActivity" />
 
         <provider
@@ -41,5 +47,4 @@
                 android:resource="@xml/file_paths" />
         </provider>
     </application>
-
 </manifest>
