@@ -4,6 +4,7 @@ import java.util.UUID
 
 object Database {
     val usersAuth = hashSetOf<UserAuth>()
+    val photos = hashSetOf<Photo>()
 
     var sessionAuth: UserAuth? = null
 
