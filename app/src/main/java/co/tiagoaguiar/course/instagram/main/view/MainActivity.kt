@@ -6,6 +6,7 @@ import android.view.MenuItem
 import android.view.WindowInsetsController
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import co.tiagoaguiar.course.instagram.R
@@ -16,6 +17,7 @@ import co.tiagoaguiar.course.instagram.home.view.HomeFragment
 import co.tiagoaguiar.course.instagram.profile.view.ProfileFragment
 import co.tiagoaguiar.course.instagram.register.view.RegisterPhotoFragment
 import co.tiagoaguiar.course.instagram.search.view.SearchFragment
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
@@ -60,21 +62,25 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             R.id.menu_bottom_home -> {
                 if (currentFragment == homeFragment) return false
                 currentFragment = homeFragment
+                scrollToolbarEnabled(false)
             }
 
             R.id.menu_bottom_search -> {
                 if (currentFragment == searchFragment) return false
                 currentFragment = searchFragment
+                scrollToolbarEnabled(false)
             }
 
             R.id.menu_bottom_add -> {
                 if (currentFragment == cameraFragment) return false
                 currentFragment = cameraFragment
+                scrollToolbarEnabled(false)
             }
 
             R.id.menu_bottom_profile -> {
                 if (currentFragment == profileFragment) return false
                 currentFragment = profileFragment
+                scrollToolbarEnabled(true)
             }
         }
 
@@ -83,5 +89,19 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         }
 
         return true
+    }
+
+    private fun scrollToolbarEnabled(enable: Boolean) {
+        val params = binding.mainToolbar.layoutParams as AppBarLayout.LayoutParams
+        val coordinatorParams = binding.mainAppbar.layoutParams as CoordinatorLayout.LayoutParams
+        if (enable) {
+            params.scrollFlags =
+                AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL or AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS
+            coordinatorParams.behavior = AppBarLayout.Behavior()
+        } else {
+            params.scrollFlags = 0
+            coordinatorParams.behavior = null
+        }
+        binding.mainAppbar.layoutParams = coordinatorParams
     }
 }
