@@ -12,11 +12,14 @@ class ProfilePresenter(
     private val repository: ProfileRepository
 ) : Profile.Presenter {
 
+    override var state: UserAuth? = null
+
     override fun fetchUserProfile() {
         view?.showProgress(true)
         val userUUID = Database.sessionAuth?.uuid ?: throw RuntimeException("TODO remove")
         repository.fetchUserProfile(userUUID, object : RequestCallback<UserAuth> {
             override fun onSuccess(data: UserAuth) {
+                state = data
                 view?.displayUserProfile(data)
             }
 

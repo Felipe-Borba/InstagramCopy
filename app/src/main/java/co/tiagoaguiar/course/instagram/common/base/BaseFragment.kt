@@ -42,7 +42,9 @@ abstract class BaseFragment<T, P : BasePresenter>(
         super.onViewCreated(view, savedInstanceState)
         binding = bind(view)
 
-        setupViews()
+        if (savedInstanceState == null) {
+            setupViews()
+        }
     }
 
     abstract fun setupViews()
