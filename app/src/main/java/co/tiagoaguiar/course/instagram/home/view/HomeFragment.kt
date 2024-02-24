@@ -15,30 +15,27 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import co.tiagoaguiar.course.instagram.R
+import co.tiagoaguiar.course.instagram.common.base.BaseFragment
 import co.tiagoaguiar.course.instagram.common.view.CustomDialog
+import co.tiagoaguiar.course.instagram.databinding.FragmentHomeBinding
+import co.tiagoaguiar.course.instagram.home.Home
 
-class HomeFragment : Fragment() {
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
+class HomeFragment : BaseFragment<FragmentHomeBinding, Home.Presenter>(R.layout.fragment_home, FragmentHomeBinding::bind) {
+
+
+    override lateinit var presenter: Home.Presenter
+
+    override fun setupViews() {
+        binding?.homeRv?.layoutManager = LinearLayoutManager(requireContext())
+        binding?.homeRv?.adapter = PostAdapter()
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        val rv = view.findViewById<RecyclerView>(R.id.home_rv)
-        rv.layoutManager = LinearLayoutManager(requireContext())
-        rv.adapter = PostAdapter()
+    override fun setupPresenter() {
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.menu_profile, menu)
-    }
+//    override fun getMenu(): Int? {
+//        return R.menu.menu_home
+//    }
 
     private class PostAdapter() : Adapter<PostAdapter.PostViewHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
