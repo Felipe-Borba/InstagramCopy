@@ -16,12 +16,14 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import co.tiagoaguiar.course.instagram.R
 import co.tiagoaguiar.course.instagram.common.base.BaseFragment
+import co.tiagoaguiar.course.instagram.common.base.DependencyInjector
 import co.tiagoaguiar.course.instagram.common.model.Post
 import co.tiagoaguiar.course.instagram.common.model.UserAuth
 import co.tiagoaguiar.course.instagram.common.view.CustomDialog
 import co.tiagoaguiar.course.instagram.databinding.FragmentProfileBinding
 import co.tiagoaguiar.course.instagram.databinding.FragmentRegisterEmailBinding
 import co.tiagoaguiar.course.instagram.profile.Profile
+import co.tiagoaguiar.course.instagram.profile.presenter.ProfilePresenter
 
 class ProfileFragment : BaseFragment<FragmentProfileBinding, Profile.Presenter>(
     R.layout.fragment_profile, FragmentProfileBinding::bind
@@ -32,7 +34,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, Profile.Presenter>(
     private val adapter = PostAdapter()
 
     override fun setupPresenter() {
-        //TODO
+        presenter = ProfilePresenter(this, DependencyInjector.profileRepository())
     }
 
     override fun setupViews() {
