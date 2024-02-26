@@ -1,9 +1,9 @@
-package co.tiagoaguiar.course.instagram.profile.data
+package co.tiagoaguiar.course.instagram.home.data
 
 import co.tiagoaguiar.course.instagram.common.base.Cache
 import co.tiagoaguiar.course.instagram.common.model.Post
 
-object PostMemoryCache : Cache<List<Post>> {
+object FeedMemoryCache : Cache<List<Post>> {
     private var post: List<Post>? = null
 
     override fun isCached(): Boolean {

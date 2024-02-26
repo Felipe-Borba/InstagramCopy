@@ -1,14 +1,14 @@
 package co.tiagoaguiar.course.instagram.profile.data
 
+import co.tiagoaguiar.course.instagram.common.base.Cache
 import co.tiagoaguiar.course.instagram.common.base.RequestCallback
 import co.tiagoaguiar.course.instagram.common.model.Database
 import co.tiagoaguiar.course.instagram.common.model.Post
 import co.tiagoaguiar.course.instagram.common.model.UserAuth
-import java.lang.RuntimeException
 
 class ProfileLocalDataSource(
-    private val profileCache: ProfileCache<UserAuth>,
-    private val postsCache: ProfileCache<List<Post>>
+    private val profileCache: Cache<UserAuth>,
+    private val postsCache: Cache<List<Post>>
 ) : ProfileDataSource {
     override fun fetchUserProfile(userUUID: String, callback: RequestCallback<UserAuth>) {
         val userAuth = profileCache.get(userUUID)

@@ -1,6 +1,6 @@
-package co.tiagoaguiar.course.instagram.profile.data
+package co.tiagoaguiar.course.instagram.common.base
 
-interface ProfileCache<T> {
+interface Cache<T> {
     fun isCached(): Boolean
 
     fun get(key: String): T?
