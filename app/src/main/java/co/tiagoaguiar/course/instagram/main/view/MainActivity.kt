@@ -2,21 +2,18 @@ package co.tiagoaguiar.course.instagram.main.view
 
 import android.os.Build
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.view.MenuItem
 import android.view.WindowInsetsController
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import co.tiagoaguiar.course.instagram.R
-import co.tiagoaguiar.course.instagram.camera.view.CameraFragment
+import co.tiagoaguiar.course.instagram.add.view.AddFragment
 import co.tiagoaguiar.course.instagram.common.extension.replaceFragment
 import co.tiagoaguiar.course.instagram.databinding.ActivityMainBinding
 import co.tiagoaguiar.course.instagram.home.view.HomeFragment
 import co.tiagoaguiar.course.instagram.profile.view.ProfileFragment
-import co.tiagoaguiar.course.instagram.register.view.RegisterPhotoFragment
 import co.tiagoaguiar.course.instagram.search.view.SearchFragment
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -26,7 +23,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     private lateinit var binding: ActivityMainBinding
     private lateinit var homeFragment: Fragment
     private lateinit var searchFragment: Fragment
-    private lateinit var cameraFragment: Fragment
+    private lateinit var addFragment: Fragment
     private lateinit var profileFragment: Fragment
     private var currentFragment: Fragment? = null
 
@@ -51,7 +48,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
         homeFragment = HomeFragment()
         searchFragment = SearchFragment()
-        cameraFragment = CameraFragment()
+        addFragment = AddFragment()
         profileFragment = ProfileFragment()
 
         binding.mainBottomNav.setOnNavigationItemSelectedListener(this)
@@ -73,8 +70,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             }
 
             R.id.menu_bottom_add -> {
-                if (currentFragment == cameraFragment) return false
-                currentFragment = cameraFragment
+                if (currentFragment == addFragment) return false
+                currentFragment = addFragment
                 scrollToolbarEnabled(false)
             }
 
