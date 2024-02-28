@@ -1,5 +1,10 @@
 package co.tiagoaguiar.course.instagram.add.view
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import co.tiagoaguiar.course.instagram.R
 import co.tiagoaguiar.course.instagram.add.Add
 import co.tiagoaguiar.course.instagram.common.base.BaseFragment
@@ -27,5 +32,30 @@ class AddFragment :
                 tab.text = getString(adapter.tabs[position])
             }.attach()
         }
+
+        if (allPermissionsGranted()) {
+            startCamera()
+        } else {
+            getPermission.launch(REQUIRED_PERMISSION)
+        }
+    }
+
+    private fun startCamera() {
+        //TODO
+    }
+
+    private val getPermission = registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+        if (allPermissionsGranted()) {
+            startCamera()
+        } else {
+            Toast.makeText(requireContext(), R.string.permission_camera_denied, Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun allPermissionsGranted() =
+        ContextCompat.checkSelfPermission(requireContext(), REQUIRED_PERMISSION) == PackageManager.PERMISSION_GRANTED
+
+    companion object {
+        private const val REQUIRED_PERMISSION = Manifest.permission.CAMERA
     }
 }
