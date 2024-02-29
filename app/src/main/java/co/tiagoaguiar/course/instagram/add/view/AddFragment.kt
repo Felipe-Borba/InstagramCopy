@@ -58,7 +58,7 @@ class AddFragment :
     }
 
     private fun startCamera() {
-        setFragmentResult("cameraKay", bundleOf("startCamera" to true))
+        setFragmentResult("cameraKey", bundleOf("startCamera" to true))
     }
 
     private val getPermission = registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
