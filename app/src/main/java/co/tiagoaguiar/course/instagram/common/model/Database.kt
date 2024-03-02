@@ -5,8 +5,7 @@ import java.io.File
 import java.util.UUID
 
 object Database {
-    val usersAuth = hashSetOf<UserAuth>()
-    val photos = hashSetOf<Photo>()
+    val usersAuth = mutableListOf<UserAuth>()
     val posts = hashMapOf<String, MutableSet<Post>>()
     val feeds = hashMapOf<String, MutableSet<Post>>()
     val followers = hashMapOf<String, MutableSet<String>>()
@@ -18,13 +17,17 @@ object Database {
             uuid = UUID.randomUUID().toString(),
             email = "userA@email.com",
             password = "12345678",
-            name = "userA"
+            name = "userA",
+            photo = Uri.fromFile(
+                File("/storage/self/primary/Android/media/co.tiagoaguiar.course.instagram/Instagram/2024-03-02-00-34-03-647.jpg")
+            )
         )
         val userB = UserAuth(
             uuid = UUID.randomUUID().toString(),
             email = "userB@email.com",
             password = "87654321",
-            name = "userB"
+            name = "userB",
+            photo = null
         )
 
         usersAuth.add(userA)

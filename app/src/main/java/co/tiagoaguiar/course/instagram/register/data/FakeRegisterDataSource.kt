@@ -3,8 +3,8 @@ package co.tiagoaguiar.course.instagram.register.data
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
+import android.provider.ContactsContract.Data
 import co.tiagoaguiar.course.instagram.common.model.Database
-import co.tiagoaguiar.course.instagram.common.model.Photo
 import co.tiagoaguiar.course.instagram.common.model.UserAuth
 import java.util.UUID
 
@@ -39,7 +39,8 @@ class FakeRegisterDataSource : RegisterDataSource {
                     uuid = UUID.randomUUID().toString(),
                     name = name,
                     email = email,
-                    password = password
+                    password = password,
+                    null
                 )
 
                 val created = Database.usersAuth.add(user)
@@ -68,15 +69,11 @@ class FakeRegisterDataSource : RegisterDataSource {
             if (userAuth == null) {
                 callback.onFailure("Usuário não encontrado")
             } else {
-                val photo = Photo(userAuth.uuid, photoUri)
+                val index = Database.usersAuth.indexOf(Database.sessionAuth)
+                Database.usersAuth[index] = Database.sessionAuth!!.copy(photo = photoUri)
+                Database.sessionAuth = Database.usersAuth[index]
 
-                val created = Database.photos.add(photo)
-
-                if (created) {
-                    callback.onSuccess()
-                } else {
-                    callback.onFailure("Erro interno no servidor.")
-                }
+                callback.onSuccess()
             }
 
 

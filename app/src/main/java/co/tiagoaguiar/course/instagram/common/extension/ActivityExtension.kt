@@ -31,13 +31,13 @@ fun Activity.onAnimationEnd(callback: () -> Unit): AnimatorListenerAdapter {
 fun AppCompatActivity.replaceFragment(@IdRes id: Int, fragment: Fragment) {
     if (supportFragmentManager.findFragmentById(id) == null) {
         supportFragmentManager.beginTransaction().apply {
-            add(id, fragment)
+            add(id, fragment, fragment.javaClass.simpleName)
             commit()
         }
     } else {
 
         supportFragmentManager.beginTransaction().apply {
-            replace(id, fragment)
+            replace(id, fragment, fragment.javaClass.simpleName)
             addToBackStack(null)
             commit()
         }
