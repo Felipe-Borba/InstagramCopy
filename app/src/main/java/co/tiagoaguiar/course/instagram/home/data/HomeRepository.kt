@@ -2,7 +2,6 @@ package co.tiagoaguiar.course.instagram.home.data
 
 import co.tiagoaguiar.course.instagram.common.base.RequestCallback
 import co.tiagoaguiar.course.instagram.common.model.Post
-import co.tiagoaguiar.course.instagram.common.model.UserAuth
 
 class HomeRepository(private val dataSourceFactory: HomeDataSourceFactory) {
 
@@ -25,5 +24,10 @@ class HomeRepository(private val dataSourceFactory: HomeDataSourceFactory) {
                 callback.onComplete()
             }
         })
+    }
+
+    fun clearCache() {
+        val localDataSource = dataSourceFactory.createLocalDataSource()
+        localDataSource.putFeed(null)
     }
 }

@@ -14,7 +14,7 @@ object ProfileMemoryCache : Cache<UserAuth> {
         return if (userAuth?.uuid == key) userAuth else null
     }
 
-    override fun put(data: UserAuth) {
+    override fun put(data: UserAuth?) {
         userAuth = data
     }
 }

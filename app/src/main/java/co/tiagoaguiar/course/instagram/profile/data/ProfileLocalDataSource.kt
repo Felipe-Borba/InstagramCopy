@@ -38,7 +38,7 @@ class ProfileLocalDataSource(
         profileCache.put(response)
     }
 
-    override fun putPosts(response: List<Post>) {
+    override fun putPosts(response: List<Post>?) {
         postsCache.put(response)
     }
 }
