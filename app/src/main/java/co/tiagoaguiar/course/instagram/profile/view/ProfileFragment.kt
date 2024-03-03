@@ -1,8 +1,10 @@
 package co.tiagoaguiar.course.instagram.profile.view
 
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import co.tiagoaguiar.course.instagram.R
 import co.tiagoaguiar.course.instagram.common.base.BaseFragment
 import co.tiagoaguiar.course.instagram.common.base.DependencyInjector
@@ -11,10 +13,11 @@ import co.tiagoaguiar.course.instagram.common.model.UserAuth
 import co.tiagoaguiar.course.instagram.databinding.FragmentProfileBinding
 import co.tiagoaguiar.course.instagram.profile.Profile
 import co.tiagoaguiar.course.instagram.profile.presenter.ProfilePresenter
+import com.google.android.material.bottomnavigation.BottomNavigationView.OnNavigationItemSelectedListener
 
 class ProfileFragment : BaseFragment<FragmentProfileBinding, Profile.Presenter>(
     R.layout.fragment_profile, FragmentProfileBinding::bind
-), Profile.View {
+), Profile.View, OnNavigationItemSelectedListener {
 
     override lateinit var presenter: Profile.Presenter
 
@@ -27,6 +30,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, Profile.Presenter>(
     override fun setupViews() {
         binding?.profileRv?.layoutManager = GridLayoutManager(requireContext(), 3)
         binding?.profileRv?.adapter = adapter
+        binding?.profileNavTabs?.setOnNavigationItemSelectedListener(this)
 
         presenter.fetchUserProfile()
     }
@@ -66,4 +70,16 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, Profile.Presenter>(
         adapter.notifyDataSetChanged()
     }
 
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menu_profile_grid -> {
+                binding?.profileRv?.layoutManager = GridLayoutManager(requireContext(), 3)
+            }
+
+            R.id.menu_profile_list -> {
+                binding?.profileRv?.layoutManager = LinearLayoutManager(requireContext())
+            }
+        }
+        return true
+    }
 }
