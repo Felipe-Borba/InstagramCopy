@@ -9,6 +9,10 @@ interface ProfileDataSource {
 
     fun fetchUserPosts(userUUID: String, callback: RequestCallback<List<Post>>)
 
+    fun followUser(userUUID: String, follow: Boolean, callback: RequestCallback<Boolean>) {
+        throw UnsupportedOperationException()
+    }
+
     fun fetchSession(): UserAuth {
         throw UnsupportedOperationException()
     }

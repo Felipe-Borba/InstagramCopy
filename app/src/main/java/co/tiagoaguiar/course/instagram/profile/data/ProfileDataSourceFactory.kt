@@ -12,27 +12,31 @@ class ProfileDataSourceFactory(
         return ProfileLocalDataSource(profileCache, postsCache)
     }
 
+    fun createRemoteDataSource(): ProfileDataSource {
+        return ProfileFakeRemoteDataSource()
+    }
+
     fun createFromUser(uuid: String?): ProfileDataSource {
         if (uuid != null) {
-            return ProfileFakeRemoteDataSource() //TODO shouldn't this be dependency injected?
+            return createRemoteDataSource()
         }
 
         if (profileCache.isCached()) {
             return ProfileLocalDataSource(profileCache, postsCache)
         }
 
-        return ProfileFakeRemoteDataSource() //TODO shouldn't this be dependency injected?
+        return createRemoteDataSource()
     }
 
     fun createFromPosts(uuid: String?): ProfileDataSource {
         if (uuid != null) {
-            return ProfileFakeRemoteDataSource() //TODO shouldn't this be dependency injected?
+            return createRemoteDataSource()
         }
 
         if (postsCache.isCached()) {
             return ProfileLocalDataSource(profileCache, postsCache)
         }
 
-        return ProfileFakeRemoteDataSource() //TODO shouldn't this be dependency injected?
+        return createRemoteDataSource()
     }
 }

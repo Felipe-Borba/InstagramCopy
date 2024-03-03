@@ -40,4 +40,24 @@ class ProfileFakeRemoteDataSource : ProfileDataSource {
             callback.onComplete()
         }, 2000)
     }
+
+    override fun followUser(userUUID: String, follow: Boolean, callback: RequestCallback<Boolean>) {
+        Handler(Looper.getMainLooper()).postDelayed({
+            var followers = Database.followers[Database.sessionAuth!!.uuid]
+
+            if (followers == null) {
+                followers = mutableSetOf()
+                Database.followers[Database.sessionAuth!!.uuid] = followers
+            }
+
+            if (follow) {
+                followers.add(userUUID)
+            } else {
+                followers.remove(userUUID)
+            }
+
+            callback.onSuccess(true)
+            callback.onComplete()
+        }, 500)
+    }
 }
