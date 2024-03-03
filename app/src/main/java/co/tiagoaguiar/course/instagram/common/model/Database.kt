@@ -34,46 +34,10 @@ object Database {
         followers[userA.uuid] = hashSetOf()
         posts[userA.uuid] = hashSetOf()
         feeds[userA.uuid] = hashSetOf()
-        feeds[userA.uuid]?.addAll(
-            arrayListOf(
-                Post(
-                    UUID.randomUUID().toString(),
-                    Uri.fromFile(
-                        File("/storage/self/primary/Android/media/co.tiagoaguiar.course.instagram/Instagram/2024-03-02-00-34-03-647.jpg")
-                    ),
-                    "desc",
-                    System.currentTimeMillis(),
-                    userA
-                ),
-                Post(
-                    UUID.randomUUID().toString(),
-                    Uri.fromFile(
-                        File("/storage/self/primary/Android/media/co.tiagoaguiar.course.instagram/Instagram/2024-03-02-00-34-03-647.jpg")
-                    ),
-                    "desc",
-                    System.currentTimeMillis(),
-                    userA
-                ),
-                Post(
-                    UUID.randomUUID().toString(),
-                    Uri.fromFile(
-                        File("/storage/self/primary/Android/media/co.tiagoaguiar.course.instagram/Instagram/2024-03-02-00-34-03-647.jpg")
-                    ),
-                    "desc",
-                    System.currentTimeMillis(),
-                    userA
-                ),
-                Post(
-                    UUID.randomUUID().toString(),
-                    Uri.fromFile(
-                        File("/storage/self/primary/Android/media/co.tiagoaguiar.course.instagram/Instagram/2024-03-02-00-34-03-647.jpg")
-                    ),
-                    "desc",
-                    System.currentTimeMillis(),
-                    userA
-                ),
-            )
-        )
+
+        for (i in 0..30) {
+            usersAuth.add(UserAuth(UUID.randomUUID().toString(), "User$i", "user$i@gmail.com", "123123123", null))
+        }
 
         usersAuth.add(userB)
         followers[userB.uuid] = hashSetOf()

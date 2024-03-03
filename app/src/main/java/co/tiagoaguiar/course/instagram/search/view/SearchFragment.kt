@@ -2,34 +2,34 @@ package co.tiagoaguiar.course.instagram.search.view
 
 import android.app.SearchManager
 import android.content.Context
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView.Adapter
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import co.tiagoaguiar.course.instagram.R
 import co.tiagoaguiar.course.instagram.common.base.BaseFragment
+import co.tiagoaguiar.course.instagram.common.base.DependencyInjector
+import co.tiagoaguiar.course.instagram.common.model.UserAuth
 import co.tiagoaguiar.course.instagram.databinding.FragmentSearchBinding
 import co.tiagoaguiar.course.instagram.search.Search
+import co.tiagoaguiar.course.instagram.search.presenter.SearchPresenter
 
 class SearchFragment : BaseFragment<FragmentSearchBinding, Search.Presenter>(
     R.layout.fragment_search,
     FragmentSearchBinding::bind
-) {
+), Search.View {
     override lateinit var presenter: Search.Presenter
+    private val searchAdapter = SearchAdapter()
 
     override fun setupViews() {
         val rv = binding?.searchRv
         rv?.layoutManager = LinearLayoutManager(requireContext())
-        rv?.adapter = PostAdapter()
+        rv?.adapter = searchAdapter
     }
 
     override fun setupPresenter() {
+        presenter = SearchPresenter(this, DependencyInjector.searchRepository())
     }
 
     override fun getMenu(): Int = R.menu.menu_search
@@ -47,31 +47,30 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, Search.Presenter>(
                 }
 
                 override fun onQueryTextChange(newText: String?): Boolean {
-                    return false
+                    return if (newText?.isNotEmpty() == true) {
+                        presenter.fetchUsers(newText)
+                        true
+                    } else {
+                        false
+                    }
                 }
             })
         }
     }
 
-    private class PostAdapter() : Adapter<PostAdapter.PostViewHolder>() {
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
-            return PostViewHolder(
-                LayoutInflater.from(parent.context).inflate(R.layout.item_user_list, parent, false)
-            )
-        }
+    override fun showProgress(enabled: Boolean) {
+        binding?.searchProgress?.visibility = if (enabled) View.VISIBLE else View.GONE
+    }
 
-        override fun getItemCount(): Int {
-            return 30
-        }
+    override fun displayFullUsers(users: List<UserAuth>) {
+        binding?.searchTxtEmpty?.visibility = View.GONE
+        binding?.searchRv?.visibility = View.VISIBLE
+        searchAdapter.items = users
+        searchAdapter.notifyDataSetChanged()
+    }
 
-        override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
-            holder.bind(R.drawable.ic_insta_add)
-        }
-
-        private class PostViewHolder(itemView: View) : ViewHolder(itemView) {
-            fun bind(image: Int) {
-                itemView.findViewById<ImageView>(R.id.search_img_user).setImageResource(image)
-            }
-        }
+    override fun displayEmptyUsers() {
+        binding?.searchTxtEmpty?.visibility = View.VISIBLE
+        binding?.searchRv?.visibility = View.GONE
     }
 }

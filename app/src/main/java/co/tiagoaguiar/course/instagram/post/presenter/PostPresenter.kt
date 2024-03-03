@@ -1,13 +1,8 @@
 package co.tiagoaguiar.course.instagram.post.presenter
 
 import android.net.Uri
-import co.tiagoaguiar.course.instagram.common.base.RequestCallback
-import co.tiagoaguiar.course.instagram.common.model.Database
-import co.tiagoaguiar.course.instagram.common.model.UserAuth
 import co.tiagoaguiar.course.instagram.post.Post
 import co.tiagoaguiar.course.instagram.post.data.PostRepository
-import co.tiagoaguiar.course.instagram.profile.Profile
-import co.tiagoaguiar.course.instagram.profile.data.ProfileRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job

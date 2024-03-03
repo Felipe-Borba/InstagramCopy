@@ -4,7 +4,6 @@ import co.tiagoaguiar.course.instagram.common.base.RequestCallback
 import co.tiagoaguiar.course.instagram.common.model.Post
 import co.tiagoaguiar.course.instagram.common.model.UserAuth
 
-//TODO posso deixar esse repository sendo uma implementação do DataSource?
 class ProfileRepository(private val dataSourceFactory: ProfileDataSourceFactory) {
     fun fetchUserProfile(callback: RequestCallback<UserAuth>) {
         val localDataSource = dataSourceFactory.createLocalDataSource()
