@@ -35,17 +35,16 @@ object Database {
         posts[userA.uuid] = hashSetOf()
         feeds[userA.uuid] = hashSetOf()
 
-        for (i in 0..30) {
-            usersAuth.add(UserAuth(UUID.randomUUID().toString(), "User$i", "user$i@gmail.com", "123123123", null))
-        }
-
         usersAuth.add(userB)
         followers[userB.uuid] = hashSetOf()
         posts[userB.uuid] = hashSetOf()
         feeds[userB.uuid] = hashSetOf()
 
-        sessionAuth = userA
+//        sessionAuth = userA
 
-        followers[sessionAuth!!.uuid]?.add(usersAuth[2].uuid)
+        for (i in 0..30) {
+            usersAuth.add(UserAuth(UUID.randomUUID().toString(), "User$i", "user$i@gmail.com", "123123123", null))
+        }
+        followers[userA.uuid]?.add(usersAuth[2].uuid)
     }
 }
