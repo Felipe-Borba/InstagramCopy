@@ -1,8 +1,11 @@
 package co.tiagoaguiar.course.instagram.post.view
 
 import android.net.Uri
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
 import androidx.recyclerview.widget.GridLayoutManager
 import co.tiagoaguiar.course.instagram.R
 import co.tiagoaguiar.course.instagram.common.base.BaseFragment
@@ -20,11 +23,14 @@ class GalleryFragment : BaseFragment<FragmentGalleryBinding, Post.Presenter>(
     private val adapter = GalleryAdapter() { uri ->
         binding?.galleryImgSelected?.setImageURI(uri)
         binding?.galleryNested?.smoothScrollTo(0, 0)
+        presenter.selectUri(uri)
     }
 
     override fun setupPresenter() {
         presenter = PostPresenter(this, DependencyInjector.postRepository(requireContext()))
     }
+
+    override fun getMenu(): Int = R.menu.menu_send
 
     override fun setupViews() {
         binding?.galleryRv?.layoutManager = GridLayoutManager(requireContext(), 3)
@@ -44,6 +50,7 @@ class GalleryFragment : BaseFragment<FragmentGalleryBinding, Post.Presenter>(
         adapter.notifyDataSetChanged()
         binding?.galleryImgSelected?.setImageURI(posts.first())
         binding?.galleryNested?.smoothScrollTo(0, 0)
+        presenter.selectUri(posts.first())
     }
 
     override fun displayEmptyPictures() {
@@ -53,5 +60,14 @@ class GalleryFragment : BaseFragment<FragmentGalleryBinding, Post.Presenter>(
 
     override fun displayRequestFailure(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.action_send -> {
+                setFragmentResult("takePhotoKey", bundleOf("uri" to presenter.getSelectedUri()))
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

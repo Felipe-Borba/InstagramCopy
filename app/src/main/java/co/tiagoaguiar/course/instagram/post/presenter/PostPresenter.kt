@@ -1,5 +1,6 @@
 package co.tiagoaguiar.course.instagram.post.presenter
 
+import android.net.Uri
 import co.tiagoaguiar.course.instagram.common.base.RequestCallback
 import co.tiagoaguiar.course.instagram.common.model.Database
 import co.tiagoaguiar.course.instagram.common.model.UserAuth
@@ -18,6 +19,8 @@ class PostPresenter(
     private var view: Post.View?,
     private val repository: PostRepository
 ) : Post.Presenter, CoroutineScope {
+
+    private var uri: Uri? = null
 
     private val job = Job()
     override val coroutineContext: CoroutineContext = job + Dispatchers.IO
@@ -38,6 +41,13 @@ class PostPresenter(
             }
         }
     }
+
+    override fun selectUri(uri: Uri) {
+        this.uri = uri
+    }
+
+    override fun getSelectedUri(): Uri? = this.uri
+
 
     override fun onDestroy() {
         job.cancel()
