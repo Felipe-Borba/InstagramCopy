@@ -15,6 +15,6 @@ class HomeDataSourceFactory(
             return HomeLocalDataSource(feedCache)
         }
 
-        return HomeFakeRemoteDataSource() //TODO shouldn't this be dependency injected?
+        return FireHomeRemoteDataSource() //TODO shouldn't this be dependency injected?
     }
 }

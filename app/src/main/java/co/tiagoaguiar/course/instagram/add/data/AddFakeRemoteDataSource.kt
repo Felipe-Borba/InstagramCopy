@@ -18,12 +18,13 @@ class AddFakeRemoteDataSource : AddDataSource {
                 Database.posts[userUUID] = posts
             }
 
+            //TODO fix fake
             val post = Post(
                 uuid = UUID.randomUUID().toString(),
-                uri = uri,
+                photoUrl = null,
                 caption = caption,
                 timestamp = System.currentTimeMillis(),
-                publisher = Database.sessionAuth!!
+                publisher = null
             )
             posts.add(post)
 
