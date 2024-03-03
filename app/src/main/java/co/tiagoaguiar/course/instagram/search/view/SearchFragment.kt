@@ -20,7 +20,19 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, Search.Presenter>(
     FragmentSearchBinding::bind
 ), Search.View {
     override lateinit var presenter: Search.Presenter
-    private val searchAdapter = SearchAdapter()
+    private val searchAdapter by lazy { SearchAdapter(onItemClicked) }
+
+    private var searchListener: SearchListener? = null
+    private val onItemClicked: (String) -> Unit = {
+        searchListener?.goToProfile(it)
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is SearchListener) {
+            searchListener = context
+        }
+    }
 
     override fun setupViews() {
         val rv = binding?.searchRv
@@ -72,5 +84,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, Search.Presenter>(
     override fun displayEmptyUsers() {
         binding?.searchTxtEmpty?.visibility = View.VISIBLE
         binding?.searchRv?.visibility = View.GONE
+    }
+
+    interface SearchListener {
+        fun goToProfile(uuid: String)
     }
 }

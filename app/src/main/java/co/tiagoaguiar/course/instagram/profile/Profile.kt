@@ -8,8 +8,8 @@ import co.tiagoaguiar.course.instagram.common.model.UserAuth
 interface Profile {
 
     interface Presenter : BasePresenter {
-        fun fetchUserProfile()
-        fun fetchUserPosts()
+        fun fetchUserProfile(uuid: String?)
+        fun fetchUserPosts(uuid: String?)
         fun clear()
     }
 

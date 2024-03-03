@@ -14,12 +14,13 @@ import co.tiagoaguiar.course.instagram.common.extension.replaceFragment
 import co.tiagoaguiar.course.instagram.databinding.ActivityMainBinding
 import co.tiagoaguiar.course.instagram.home.view.HomeFragment
 import co.tiagoaguiar.course.instagram.profile.view.ProfileFragment
+import co.tiagoaguiar.course.instagram.search.view.SearchAdapter
 import co.tiagoaguiar.course.instagram.search.view.SearchFragment
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener,
-    AddFragment.AddListener {
+    AddFragment.AddListener, SearchFragment.SearchListener {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var homeFragment: HomeFragment
@@ -54,6 +55,19 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
         binding.mainBottomNav.setOnNavigationItemSelectedListener(this)
         binding.mainBottomNav.selectedItemId = R.id.menu_bottom_home
+    }
+
+    override fun goToProfile(uuid: String) {
+        val fragment = ProfileFragment().apply {
+            arguments = Bundle().apply {
+                putString(ProfileFragment.KEY_USER_ID, uuid)
+            }
+        }
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.main_fragment, fragment, fragment.javaClass.simpleName + "detail")
+            addToBackStack(null)
+            commit()
+        }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
