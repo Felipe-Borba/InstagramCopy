@@ -5,7 +5,7 @@ import co.tiagoaguiar.course.instagram.common.model.Post
 import co.tiagoaguiar.course.instagram.common.model.UserAuth
 
 interface ProfileDataSource {
-    fun fetchUserProfile(userUUID: String, callback: RequestCallback<UserAuth>)
+    fun fetchUserProfile(userUUID: String, callback: RequestCallback<Pair<UserAuth, Boolean?>>)
 
     fun fetchUserPosts(userUUID: String, callback: RequestCallback<List<Post>>)
 
@@ -13,7 +13,7 @@ interface ProfileDataSource {
         throw UnsupportedOperationException()
     }
 
-    fun putUser(response: UserAuth) {
+    fun putUser(response: Pair<UserAuth, Boolean?>) {
         throw UnsupportedOperationException()
     }
 

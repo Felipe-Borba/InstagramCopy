@@ -45,5 +45,7 @@ object Database {
         feeds[userB.uuid] = hashSetOf()
 
         sessionAuth = userA
+
+        followers[sessionAuth!!.uuid]?.add(usersAuth[2].uuid)
     }
 }
