@@ -17,6 +17,7 @@ import co.tiagoaguiar.course.instagram.profile.data.ProfileMemoryCache
 import co.tiagoaguiar.course.instagram.profile.data.ProfileRepository
 import co.tiagoaguiar.course.instagram.register.data.FireRegisterDataSource
 import co.tiagoaguiar.course.instagram.register.data.RegisterRepository
+import co.tiagoaguiar.course.instagram.search.data.FireSearchRemoteDataSource
 import co.tiagoaguiar.course.instagram.search.data.SearchFakeRemoteDataSource
 import co.tiagoaguiar.course.instagram.search.data.SearchRepository
 import co.tiagoaguiar.course.instagram.splash.data.FakeLocalDataSource
@@ -65,6 +66,7 @@ object DependencyInjector {
     }
 
     fun searchRepository(): SearchRepository {
-        return SearchRepository(SearchFakeRemoteDataSource())
+//        return SearchRepository(SearchFakeRemoteDataSource())
+        return SearchRepository(FireSearchRemoteDataSource())
     }
 }
