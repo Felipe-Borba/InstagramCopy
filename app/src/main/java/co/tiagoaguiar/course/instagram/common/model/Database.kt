@@ -40,7 +40,7 @@ object Database {
         posts[userB.uuid] = hashSetOf()
         feeds[userB.uuid] = hashSetOf()
 
-        sessionAuth = userB
+//        sessionAuth = userB
 
 //        for (i in 0..30) {
 //            usersAuth.add(UserAuth(UUID.randomUUID().toString(), "User$i", "user$i@gmail.com", "123123123", null))

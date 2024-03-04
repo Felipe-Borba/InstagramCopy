@@ -2,10 +2,11 @@ package co.tiagoaguiar.course.instagram.profile.data
 
 import co.tiagoaguiar.course.instagram.common.base.Cache
 import co.tiagoaguiar.course.instagram.common.model.Post
+import co.tiagoaguiar.course.instagram.common.model.User
 import co.tiagoaguiar.course.instagram.common.model.UserAuth
 
 class ProfileDataSourceFactory(
-    private val profileCache: Cache<Pair<UserAuth, Boolean?>>,
+    private val profileCache: Cache<Pair<User, Boolean?>>,
     private val postsCache: Cache<List<Post>>
 ) {
     fun createLocalDataSource(): ProfileDataSource {
@@ -13,7 +14,7 @@ class ProfileDataSourceFactory(
     }
 
     fun createRemoteDataSource(): ProfileDataSource {
-        return ProfileFakeRemoteDataSource()
+        return FireProfileRemoteDataSource()
     }
 
     fun createFromUser(uuid: String?): ProfileDataSource {

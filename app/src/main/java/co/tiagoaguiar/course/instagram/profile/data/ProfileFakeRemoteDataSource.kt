@@ -5,23 +5,25 @@ import android.os.Looper
 import co.tiagoaguiar.course.instagram.common.base.RequestCallback
 import co.tiagoaguiar.course.instagram.common.model.Database
 import co.tiagoaguiar.course.instagram.common.model.Post
+import co.tiagoaguiar.course.instagram.common.model.User
 import co.tiagoaguiar.course.instagram.common.model.UserAuth
 
 class ProfileFakeRemoteDataSource : ProfileDataSource {
-    override fun fetchUserProfile(userUUID: String, callback: RequestCallback<Pair<UserAuth, Boolean?>>) {
+    override fun fetchUserProfile(userUUID: String, callback: RequestCallback<Pair<User, Boolean?>>) {
         Handler(Looper.getMainLooper()).postDelayed({
             val userAuth = Database.usersAuth.firstOrNull() {
                 userUUID == it.uuid
             }
 
+            //TODO remove or fix
             if (userAuth != null) {
                 if(userAuth == Database.sessionAuth) {
-                    callback.onSuccess(Pair(userAuth, null))
+//                    callback.onSuccess(Pair(userAuth, null))
                 } else {
                     val followings = Database.followers[Database.sessionAuth!!.uuid]
                     val destUser = followings?.firstOrNull { it == userUUID }
                     val following = destUser != null
-                    callback.onSuccess(Pair(userAuth, following))
+//                    callback.onSuccess(Pair(userAuth, following))
                 }
             } else {
                 callback.onFailure("Usuário não encontrado")

@@ -13,7 +13,7 @@ class LoginPresenter(
 ) : Login.Presenter {
     override fun login(email: String, password: String) {
         val isValidEmail = Patterns.EMAIL_ADDRESS.matcher(email).matches()
-        val isValidPassword = password.length <= 8
+        val isValidPassword = password.length >= 8
         val isAllValid = isValidPassword && isValidEmail
 
         if (!isValidEmail) {
