@@ -8,8 +8,11 @@ import co.tiagoaguiar.course.instagram.common.model.Post
 import co.tiagoaguiar.course.instagram.common.model.User
 import co.tiagoaguiar.course.instagram.common.model.UserAuth
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.Query
+import java.lang.RuntimeException
 
 class FireProfileRemoteDataSource : ProfileDataSource {
     override fun fetchUserProfile(userUUID: String, callback: RequestCallback<Pair<User, Boolean?>>) {
@@ -26,12 +29,15 @@ class FireProfileRemoteDataSource : ProfileDataSource {
                 } else {
                     FirebaseFirestore.getInstance()
                         .collection("/followers")
-                        .document(FirebaseAuth.getInstance().uid!!)
-                        .collection("followers")
-                        .whereEqualTo("uuid", userUUID)
+                        .document(userUUID)
                         .get()
                         .addOnSuccessListener { response ->
-                            callback.onSuccess(Pair(user, !response.isEmpty))
+                            if (!response.exists()) {
+                                callback.onSuccess(Pair(user, false))
+                            } else {
+                                val list = response.get("followers") as List<String>
+                                callback.onSuccess(Pair(user, list.contains(FirebaseAuth.getInstance().uid)))
+                            }
                         }
                         .addOnFailureListener { e ->
                             callback.onFailure(e.message ?: "Falha ao buscar os seguidores")
@@ -72,6 +78,39 @@ class FireProfileRemoteDataSource : ProfileDataSource {
     }
 
     override fun followUser(userUUID: String, follow: Boolean, callback: RequestCallback<Boolean>) {
-        //TODO
+        val uid = FirebaseAuth.getInstance().uid ?: throw RuntimeException("Usuário não logado")
+
+        FirebaseFirestore.getInstance()
+            .collection("/followers")
+            .document(userUUID)
+            .update("followers", if (follow) FieldValue.arrayUnion(uid) else FieldValue.arrayRemove(uid))
+            .addOnSuccessListener { res ->
+                callback.onSuccess(true)
+            }
+            .addOnFailureListener { e ->
+                val err = e as? FirebaseFirestoreException
+                if (err?.code == FirebaseFirestoreException.Code.NOT_FOUND) {
+                    FirebaseFirestore.getInstance()
+                        .collection("/followers")
+                        .document(userUUID)
+                        .set(
+                            hashMapOf(
+                                "followers" to listOf(uid)
+                            )
+                        )
+                        .addOnSuccessListener { res ->
+                            callback.onSuccess(true)
+                        }
+                        .addOnFailureListener { e ->
+                            callback.onFailure(e.message ?: "Falha ao criar seguidor")
+                        }
+
+                } else {
+                    callback.onFailure(e.message ?: "Falha ao atualizar seguidor")
+                }
+            }
+            .addOnCompleteListener {
+                callback.onComplete()
+            }
     }
 }

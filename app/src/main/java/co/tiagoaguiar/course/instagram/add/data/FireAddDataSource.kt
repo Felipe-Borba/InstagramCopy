@@ -61,19 +61,18 @@ class FireAddDataSource : AddDataSource {
                                                 FirebaseFirestore.getInstance()
                                                     .collection("/followers")
                                                     .document(userUUID)
-                                                    .collection("followers")
                                                     .get()
                                                     .addOnSuccessListener { resFollowers ->
-                                                        for (document in resFollowers.documents) {
-                                                            val followerUUID = document.toObject(String::class.java)
-                                                                ?: throw RuntimeException("Falha ao converter")
-
-                                                            FirebaseFirestore.getInstance()
-                                                                .collection("/feeds")
-                                                                .document(followerUUID)
-                                                                .collection("posts")
-                                                                .document(postRef.path)
-                                                                .set(post)
+                                                        if (resFollowers.exists()) {
+                                                            val list = resFollowers.get("followers") as List<String>
+                                                            for (followerUUID in list) {
+                                                                FirebaseFirestore.getInstance()
+                                                                    .collection("/feeds")
+                                                                    .document(followerUUID)
+                                                                    .collection("posts")
+                                                                    .document(postRef.id)
+                                                                    .set(post)
+                                                            }
                                                         }
 
                                                         callback.onSuccess(true)
