@@ -7,6 +7,7 @@ import co.tiagoaguiar.course.instagram.common.base.RequestCallback
 import co.tiagoaguiar.course.instagram.common.model.Database
 import co.tiagoaguiar.course.instagram.common.model.Post
 import co.tiagoaguiar.course.instagram.common.model.User
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.storage.FirebaseStorage
@@ -27,10 +28,12 @@ class FireAddDataSource : AddDataSource {
             .addOnSuccessListener { res ->
                 imgRef.downloadUrl
                     .addOnSuccessListener { resDownload ->
-                        FirebaseFirestore.getInstance()
+
+                        val meRef = FirebaseFirestore.getInstance()
                             .collection("/users")
                             .document(userUUID)
-                            .get()
+
+                        meRef.get()
                             .addOnSuccessListener { resMe ->
                                 val me = resMe.toObject(User::class.java)
 
@@ -50,6 +53,8 @@ class FireAddDataSource : AddDataSource {
 
                                 postRef.set(post)
                                     .addOnSuccessListener { resPost ->
+                                        meRef.update("postCount", FieldValue.increment(1))
+                                       
                                         FirebaseFirestore.getInstance()
                                             .collection("/feeds")
                                             .document(userUUID)
