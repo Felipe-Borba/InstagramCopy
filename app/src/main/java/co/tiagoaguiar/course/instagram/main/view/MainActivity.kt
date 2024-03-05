@@ -23,7 +23,7 @@ import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener,
-    AddFragment.AddListener, SearchFragment.SearchListener, LogoutListener {
+    AddFragment.AddListener, SearchFragment.SearchListener, LogoutListener, ProfileFragment.FollowListener {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var homeFragment: HomeFragment
@@ -62,13 +62,22 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
     override fun logout() {
         profileFragment.presenter.clear()
-        homeFragment.presenter.clear()
+        if (supportFragmentManager.findFragmentByTag(profileFragment.javaClass.simpleName) != null) {
+            profileFragment.presenter.clear()
+        }
         homeFragment.presenter.logout()
 
         val intent = Intent(baseContext, SplashActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+    }
+
+    override fun followUpdated() {
+        homeFragment.presenter.clear()
+        if (supportFragmentManager.findFragmentByTag(profileFragment.javaClass.simpleName) != null) {
+            profileFragment.presenter.clear()
+        }
     }
 
     override fun goToProfile(uuid: String) {

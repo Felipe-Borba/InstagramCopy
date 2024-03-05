@@ -1,18 +1,13 @@
 package co.tiagoaguiar.course.instagram.profile.data
 
-import android.os.Handler
-import android.os.Looper
 import co.tiagoaguiar.course.instagram.common.base.RequestCallback
-import co.tiagoaguiar.course.instagram.common.model.Database
 import co.tiagoaguiar.course.instagram.common.model.Post
 import co.tiagoaguiar.course.instagram.common.model.User
-import co.tiagoaguiar.course.instagram.common.model.UserAuth
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.Query
-import java.lang.RuntimeException
 
 class FireProfileRemoteDataSource : ProfileDataSource {
     override fun fetchUserProfile(userUUID: String, callback: RequestCallback<Pair<User, Boolean?>>) {
@@ -87,6 +82,7 @@ class FireProfileRemoteDataSource : ProfileDataSource {
             .addOnSuccessListener { res ->
                 followingCounter(uid, follow)
                 followersCounter(uid)
+                updateFeed(userUUID, follow)
                 callback.onSuccess(true)
             }
             .addOnFailureListener { e ->
@@ -103,6 +99,7 @@ class FireProfileRemoteDataSource : ProfileDataSource {
                         .addOnSuccessListener { res ->
                             followingCounter(uid, follow)
                             followersCounter(uid)
+                            updateFeed(userUUID, follow)
                             callback.onSuccess(true)
                         }
                         .addOnFailureListener { e ->
@@ -116,6 +113,40 @@ class FireProfileRemoteDataSource : ProfileDataSource {
             .addOnCompleteListener {
                 callback.onComplete()
             }
+    }
+
+    private fun updateFeed(uid: String, follow: Boolean) {
+        if (!follow) {
+            FirebaseFirestore.getInstance()
+                .collection("/feeds")
+                .document(FirebaseAuth.getInstance().uid!!)
+                .collection("posts")
+                .whereEqualTo("publisher.uuid", uid)
+                .get()
+                .addOnSuccessListener { res ->
+                    val documents = res.documents
+                    for (document in documents) {
+                        document.reference.delete()
+                    }
+                }
+        } else {
+            FirebaseFirestore.getInstance()
+                .collection("/feeds")
+                .document(uid)
+                .collection("posts")
+                .get()
+                .addOnSuccessListener { res ->
+                    val posts = res.toObjects(Post::class.java)
+                    posts.lastOrNull()?.let {
+                        FirebaseFirestore.getInstance()
+                            .collection("/feeds")
+                            .document(FirebaseAuth.getInstance().uid!!)
+                            .collection("posts")
+                            .document(it.uuid!!)
+                            .set(it)
+                    }
+                }
+        }
     }
 
     private fun followingCounter(uid: String, isFollow: Boolean) {
