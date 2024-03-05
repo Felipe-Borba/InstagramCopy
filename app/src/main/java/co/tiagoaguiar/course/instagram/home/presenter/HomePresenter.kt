@@ -14,6 +14,10 @@ class HomePresenter(
         repository.clearCache()
     }
 
+    override fun logout() {
+        repository.logout()
+    }
+
     override fun fetchFeed() {
         view?.showProgress(true)
         repository.fetchFeed(object : RequestCallback<List<Post>> {

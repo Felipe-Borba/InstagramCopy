@@ -1,5 +1,7 @@
 package co.tiagoaguiar.course.instagram.home.view
 
+import android.content.Context
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,6 +12,7 @@ import co.tiagoaguiar.course.instagram.common.model.Post
 import co.tiagoaguiar.course.instagram.databinding.FragmentHomeBinding
 import co.tiagoaguiar.course.instagram.home.Home
 import co.tiagoaguiar.course.instagram.home.presenter.HomePresenter
+import co.tiagoaguiar.course.instagram.main.LogoutListener
 
 class HomeFragment :
     BaseFragment<FragmentHomeBinding, Home.Presenter>(
@@ -20,6 +23,14 @@ class HomeFragment :
 
     override lateinit var presenter: Home.Presenter
     private val adapter = FeedAdapter()
+    private var logoutListener: LogoutListener? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is LogoutListener) {
+            logoutListener = context
+        }
+    }
 
     override fun setupViews() {
         binding?.homeRv?.layoutManager = LinearLayoutManager(requireContext())
@@ -52,5 +63,15 @@ class HomeFragment :
         binding?.homeRv?.visibility = View.VISIBLE
         adapter.items = posts
         adapter.notifyDataSetChanged()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.menu_logout -> {
+                logoutListener?.logout()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

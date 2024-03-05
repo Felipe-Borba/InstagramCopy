@@ -15,4 +15,8 @@ interface HomeDataSource {
     fun putFeed(response: List<Post>?) {
         throw UnsupportedOperationException()
     }
+
+    fun logout() {
+        throw UnsupportedOperationException()
+    }
 }

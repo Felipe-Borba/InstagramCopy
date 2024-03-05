@@ -10,11 +10,15 @@ class HomeDataSourceFactory(
         return HomeLocalDataSource(feedCache)
     }
 
+    fun createRemoteDataSource(): HomeDataSource {
+        return FireHomeRemoteDataSource()
+    }
+
     fun createFromFeed(): HomeDataSource {
         if (feedCache.isCached()) {
             return HomeLocalDataSource(feedCache)
         }
 
-        return FireHomeRemoteDataSource() //TODO shouldn't this be dependency injected?
+        return createRemoteDataSource()
     }
 }

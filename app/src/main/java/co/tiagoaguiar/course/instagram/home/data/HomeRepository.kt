@@ -26,6 +26,10 @@ class HomeRepository(private val dataSourceFactory: HomeDataSourceFactory) {
         })
     }
 
+    fun logout() {
+        dataSourceFactory.createRemoteDataSource().logout()
+    }
+
     fun clearCache() {
         val localDataSource = dataSourceFactory.createLocalDataSource()
         localDataSource.putFeed(null)
