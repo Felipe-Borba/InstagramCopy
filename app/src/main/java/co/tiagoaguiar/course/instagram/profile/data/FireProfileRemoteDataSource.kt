@@ -85,6 +85,8 @@ class FireProfileRemoteDataSource : ProfileDataSource {
             .document(userUUID)
             .update("followers", if (follow) FieldValue.arrayUnion(uid) else FieldValue.arrayRemove(uid))
             .addOnSuccessListener { res ->
+                followingCounter(uid, follow)
+                followersCounter(uid)
                 callback.onSuccess(true)
             }
             .addOnFailureListener { e ->
@@ -99,6 +101,8 @@ class FireProfileRemoteDataSource : ProfileDataSource {
                             )
                         )
                         .addOnSuccessListener { res ->
+                            followingCounter(uid, follow)
+                            followersCounter(uid)
                             callback.onSuccess(true)
                         }
                         .addOnFailureListener { e ->
@@ -111,6 +115,31 @@ class FireProfileRemoteDataSource : ProfileDataSource {
             }
             .addOnCompleteListener {
                 callback.onComplete()
+            }
+    }
+
+    private fun followingCounter(uid: String, isFollow: Boolean) {
+        val meRef = FirebaseFirestore.getInstance().collection("/users").document(uid)
+
+        if (isFollow) {
+            meRef.update("following", FieldValue.increment(1))
+        } else {
+            meRef.update("following", FieldValue.increment(-1))
+        }
+    }
+
+    private fun followersCounter(uid: String) {
+        val meRef = FirebaseFirestore.getInstance().collection("/users").document(uid)
+
+        FirebaseFirestore.getInstance()
+            .collection("/followers")
+            .document(uid)
+            .get()
+            .addOnSuccessListener { res ->
+                if (res.exists()) {
+                    val list = res.get("followers") as List<String>
+                    meRef.update("followers", list.size)
+                }
             }
     }
 }
