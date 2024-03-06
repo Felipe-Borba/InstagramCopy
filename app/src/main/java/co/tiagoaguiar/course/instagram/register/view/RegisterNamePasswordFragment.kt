@@ -44,7 +44,7 @@ class RegisterNamePasswordFragment : Fragment(R.layout.fragment_register_name_pa
                     displayConfirmFailure(null)
                 })
 
-                registerNameBtmNext.setOnClickListener {
+                registerNameBtnNext.setOnClickListener {
                     presenter.create(
                         email = email,
                         name = registerEditName.text.toString(),
@@ -68,7 +68,7 @@ class RegisterNamePasswordFragment : Fragment(R.layout.fragment_register_name_pa
     }
 
     override fun showProgress(enabled: Boolean) {
-        binding?.registerNameBtmNext?.showProgress(enabled)
+        binding?.registerNameBtnNext?.showProgress(enabled)
     }
 
     override fun displayNameFailure(error: Int?) {
@@ -94,7 +94,7 @@ class RegisterNamePasswordFragment : Fragment(R.layout.fragment_register_name_pa
     private val watcher = TxtWatcher {
         binding?.let {
             with(it) {
-                registerNameBtmNext.isEnabled = registerEditName.text.toString().isNotEmpty()
+                registerNameBtnNext.isEnabled = registerEditName.text.toString().isNotEmpty()
                         && registerEditPassword.text.toString().isNotEmpty()
                         && registerEditConfirm.text.toString().isNotEmpty()
             }

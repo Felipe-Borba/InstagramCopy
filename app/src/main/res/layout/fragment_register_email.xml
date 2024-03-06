@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context=".login.view.LoginActivity">
+    android:background="?colorOnPrimary">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -16,7 +15,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.4">
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -24,11 +22,12 @@
             android:paddingBottom="70dp">
 
             <ImageView
+                android:id="@+id/register_img_logo"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="48dp"
-                android:importantForAccessibility="no"
+                android:contentDescription="@null"
                 android:src="@drawable/photo_icon" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -39,25 +38,27 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/register_edit_email"
                     style="@style/Theme.Instagram.FormEditText"
-                    android:autofillHints="emailAddress"
+                    android:autofillHints="@null"
                     android:hint="@string/email"
                     android:inputType="textEmailAddress" />
             </com.google.android.material.textfield.TextInputLayout>
 
+
             <co.tiagoaguiar.course.instagram.common.view.LoadingButton
-                android:id="@+id/register_btm_next"
+                android:id="@+id/register_btn_next"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:text="@string/next" />
+
         </LinearLayout>
+
     </ScrollView>
 
     <View
-        android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/gray_darker"
-        app:layout_constraintBottom_toTopOf="@+id/register_txt_login"
+        app:layout_constraintBottom_toTopOf="@id/register_txt_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -67,11 +68,11 @@
         android:layout_width="match_parent"
         android:layout_marginStart="0dp"
         android:layout_marginEnd="0dp"
-        android:background="@color/white"
+        android:background="?colorOnPrimary"
         android:padding="24dp"
         android:text="@string/already_has_account"
         android:textAlignment="center"
-        android:textColor="@color/black"
+        android:textColor="?colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

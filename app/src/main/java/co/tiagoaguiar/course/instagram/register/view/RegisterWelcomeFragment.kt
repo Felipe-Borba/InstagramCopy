@@ -22,8 +22,8 @@ class RegisterWelcomeFragment : Fragment(R.layout.fragment_register_welcome) {
             with(it) {
                 registerTxtWelcome.text = getString(R.string.welcome_to_instagram, name)
 
-                registerBtmNext.isEnabled = true
-                registerBtmNext.setOnClickListener {
+                registerBtnNext.isEnabled = true
+                registerBtnNext.setOnClickListener {
                     fragmentAttachListener?.goToPhotoScreen()
                 }
             }
