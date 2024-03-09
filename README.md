@@ -2,9 +2,12 @@
 
 ## Overview
 
-This project is a hands-on learning experience focused on Android development using XML and Kotlin. The goal is to replicate some key features of the Instagram app, helping you understand the fundamentals of Android UI design and functionality.   
+This project is a hands-on learning experience focused on Android development using XML and Kotlin. The goal is to
+replicate some key features of the Instagram app, helping you understand the fundamentals of Android UI design and
+functionality.
 
-**Note:** This project is solely for educational purposes, and the code is inspired by Instagram. It is not intended for commercial use.
+**Note:** This project is solely for educational purposes, and the code is inspired by Instagram. It is not intended for
+commercial use.
 
 ## Features
 
@@ -17,31 +20,57 @@ This project is a hands-on learning experience focused on Android development us
 ## Getting Started
 
 1. Clone the repository to your local machine:
-```bash
-git clone https://github.com/your-username/instagram-clone.git
-```
+
+    ```bash
+    git clone https://github.com/your-username/instagram-clone.git
+    ```
+
 2. Open the project in Android Studio.
 3. Run the app on an emulator or a physical device.
 
 ## Screenshots
 
 ### Login Screen:
-TODO
+
+![](/Users/felipe/Development/android-express/Instagram/documentation/login.png "Login Screen Image")
+
 ### Home Feed:
-TODO
+
+![](./Instagram/documentation/home.png "Home Feed Image")
+
 ### Profile Page:
-TODO
+
+![](./Instagram/documentation/profile.png "Profile Page Image")
+
 ### Upload Post:
-TODO
-### Comments and Likes:
-TODO
+
+![](./Instagram/documentation/upload_post.png "Upload Post Image")
+
+[//]: # (### Comments and Likes:)
+
+[//]: # (TODO)
 
 ## Dependencies
 
-```gradle
+```kotlin
 dependencies {
-    implementation 'com.example:library:version'
-    // Add more dependencies as needed
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
+
+    implementation 'androidx.fragment:fragment-ktx:1.3.6'
+
+    implementation 'androidx.camera:camera-camera2:1.0.1'
+    implementation 'androidx.camera:camera-lifecycle:1.0.1'
+    implementation 'androidx.camera:camera-view:1.0.0-alpha27'
+
+    implementation platform ('com.google.firebase:firebase-bom:28.4.2')
+    implementation 'com.google.firebase:firebase-auth-ktx'
+    implementation 'com.google.firebase:firebase-firestore-ktx'
+    implementation 'com.google.firebase:firebase-storage-ktx'
+
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
 }
 ```
 
