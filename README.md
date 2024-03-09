@@ -32,19 +32,19 @@ commercial use.
 
 ### Login Screen:
 
-![](https://github.com/Felipe-Borba/InstagramCopy/blob/main/documentation/login.png)
+![](./documentation/login.png)
 
 ### Home Feed:
 
-![](https://github.com/Felipe-Borba/InstagramCopy/blob/main/documentation/home.png)
+![Home](./documentation/home.png)
 
 ### Profile Page:
 
-![](https://github.com/Felipe-Borba/InstagramCopy/blob/main/documentation/profile.png)
+![Profile](./documentation/profile.png)
 
 ### Upload Post:
 
-![](https://github.com/Felipe-Borba/InstagramCopy/blob/main/documentation/upload_post.png)
+![Upload](./documentation/upload-post.png)
 
 [//]: # (### Comments and Likes:)
 
