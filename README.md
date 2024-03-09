@@ -32,19 +32,19 @@ commercial use.
 
 ### Login Screen:
 
-![](/Users/felipe/Development/android-express/Instagram/documentation/login.png "Login Screen Image")
+![](https://github.com/Felipe-Borba/InstagramCopy/blob/main/documentation/login.png)
 
 ### Home Feed:
 
-![](./Instagram/documentation/home.png "Home Feed Image")
+![](https://github.com/Felipe-Borba/InstagramCopy/blob/main/documentation/home.png)
 
 ### Profile Page:
 
-![](./Instagram/documentation/profile.png "Profile Page Image")
+![](https://github.com/Felipe-Borba/InstagramCopy/blob/main/documentation/profile.png)
 
 ### Upload Post:
 
-![](./Instagram/documentation/upload_post.png "Upload Post Image")
+![](https://github.com/Felipe-Borba/InstagramCopy/blob/main/documentation/upload_post.png)
 
 [//]: # (### Comments and Likes:)
 
